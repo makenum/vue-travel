@@ -1,0 +1,61 @@
+// 单行文字溢出点点
+ellipsis()
+  overflow hidden
+  white-space nowrap
+  text-overflow ellipsis
+// 多行截断并省略
+ellipsis($line = 1)
+  overflow hidden
+  text-overflow ellipsis
+  if ($line == 1)
+    white-space nowrap
+  else
+    display -webkit-box
+    -webkit-line-clamp $line
+    -webkit-box-orient vertical
+// 百分比图片
+percent-img()
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+// 1像素线条
+hairline-y()
+  @media only screen and (-webkit-min-device-pixel-ratio: 2)
+    transform scaleY(0.5)
+  @media only screen and (-webkit-min-device-pixel-ratio: 3)
+    transform scaleY(0.33)
+hairline-x()
+  @media only screen and (-webkit-min-device-pixel-ratio: 2)
+    transform scaleX(0.5)
+  @media only screen and (-webkit-min-device-pixel-ratio: 3)
+    transform scaleX(0.33)
+hairline($direction = top, $color = #000)
+  content ''
+  position absolute
+  display block
+  if ($direction == top || ($direction == bottom))
+    left 0
+    right 0
+    height 1px
+    border-bottom 1px solid $color
+    hairline-y()
+    transform-origin 0 0
+  if ($direction == left || ($direction == right))
+    top 0
+    bottom 0
+    width 1px
+    border-left 1px solid $color
+    hairline-x()
+    transform-origin 0 0
+// placeholder文字颜色
+placeholder($color = false)
+  $vendors = ':-webkit-input', '-moz', ':-moz', '-ms-input'
+  for $prefix in $vendors
+    &:{$prefix}-placeholder
+      if ($prefix == ':-moz' || ($prefix == '-moz'))
+        -moz-opacity 1
+      if ($color)
+        color $color
+      {block}
